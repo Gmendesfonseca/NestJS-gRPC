@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package orders;
+
+service OrdersService {
+    rpc index(OrdersRequest) returns (OrdersResponse);
+    rpc store(CreateOrdersRequest) returns (OrdersResponse);
+    rpc update(UpdateOrdersRequest) returns (OrdersResponse);
+    rpc destroy(OrdersRequest) returns (DestroyOrdersResponse);
+}
+
+message OrdersRequest {
+    int32 orderId = 1;
+}
+
+message CreateOrdersRequest {
+    repeated int32 productIds = 2;
+    float totalPrice = 3;
+}
+
+message UpdateOrdersRequest {
+    int32 orderId = 1;
+    repeated int32 productIds = 2;
+    float totalPrice = 3;
+    string status = 4;
+}
+
+message OrdersResponse {
+    int32 orderId = 1;
+    repeated int32 productIds = 2;
+    float totalPrice = 3;
+    string status = 4;
+}
+
+message DestroyOrdersResponse {
+    string message = 1;
+}

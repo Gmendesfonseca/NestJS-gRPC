@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package products;
+
+service ProductsService {
+    rpc index (ProductsRequest) returns (ProductsResponse);
+    rpc store (CreateProductsRequest) returns (ProductsResponse);
+    rpc update(UpdateProductsRequest) returns (ProductsResponse);
+    rpc destroy (ProductsRequest)  returns (DestroyProductsResponse);
+}
+
+message ProductsRequest {
+    int32 productId  = 1;
+}
+
+message CreateProductsRequest {
+    string name = 2;
+    int32 price = 3;
+}
+
+message UpdateProductsRequest {
+    int32 productId = 1;
+    string name = 2;
+    int32 price = 3;
+}
+
+message ProductsResponse {
+    int32 productId = 1;
+    string name = 2;
+    int32 price = 3;
+}
+
+message DestroyProductsResponse {
+    string message = 1;
+}
+

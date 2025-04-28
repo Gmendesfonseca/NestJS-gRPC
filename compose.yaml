@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - '50051:50051'
+    volumes:
+      - ./nginx/grpc.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - job-service
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    depends_on:
+      - nginx
+    environment:
+      - GRPC_SERVICE_URL=nginx:50051
+    ports:
+      - '3000:3000'
+
+  product-service:
+    build:
+      context: .
+      dockerfile: ./apps/job-service/Dockerfile
+    expose:
+      - '5000'
+    environment:
+      - PORT=5000
